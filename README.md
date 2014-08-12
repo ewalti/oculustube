@@ -27,6 +27,12 @@ This application was built using grunt. The settings are located in the Gruntfil
 Testing 
 ------ 
 Qunit is included with this project, though not many unit tests were created. To access the unit tests, simply navigate to the base URL of the project and concatenate `/?test`. 
+
+Video Object Caching
+------ 
+The YouTube video data is only cached per application view located in the `App.IndexController.videos`. The schema for each video object is defined in an `App.Video` object and only contains the video id, title, and thumbnail. This can easily be extended to include any/all YouTube data if required.
+
+The `App.IndexController.videos` array of objects is extended when more videos are loaded by clicking the `load more` button. `Localstorage` did not seem appropriate for this use-case as there is no good way to cache the YouTube API query for subsequent page loads.
  
 Dependencies 
 ------ 
