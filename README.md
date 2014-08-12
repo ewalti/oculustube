@@ -2,7 +2,7 @@
 OculusTube 
 ====== 
  
-An Ember.js application to wrap the YouTube API to watch Oculus Rift movies 
+An Ember.js application to wrap the YouTube API to watch Oculus Rift movies.
  
 Responsive Design 
 ------ 
