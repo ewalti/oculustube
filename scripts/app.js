@@ -125,10 +125,7 @@ App.IndexController = Ember.ArrayController.extend({
             self.send('activateVideo', offset);
 
             $(window).resize(function(){
-              // @TODO: fix me(!)
-              var ele = $('.video-list li.thumbnail').eq(self.get('currentOffset'));
-              var data = $('.video-list').data('jsp');
-              if(data) data.scrollToElement(ele, true, false);
+              self.send('scrollToVideo', self.get('currentOffset'));
             });
 
           },
@@ -234,16 +231,18 @@ App.IndexController = Ember.ArrayController.extend({
     },
 
     scrollToVideo: function(offset) {
-      console.log(offset);
-      var ele = $('.video-list li.thumbnail').eq(offset);
-      var data = $('.video-list').data('jsp');
-      if(data) data.scrollToElement(ele, true, false);
+      var ele = $('.video-list li.thumbnail').eq(offset),
+          data = $('.video-list').data('jsp');
+      if(data) {
+        data.scrollToElement(ele, true, false);
+      }
     },
 
     /**
      * Search based on a query paramter to load videos
      */
     search: function() {
+
       var self = this;
 
       var query = this.get('query');
@@ -298,8 +297,6 @@ App.IndexController = Ember.ArrayController.extend({
      */
     refreshList: function() {
 
-      console.log('refresh list');
-
       var data;
 
       data = $('.video-list').data('jsp');
@@ -315,8 +312,6 @@ App.IndexController = Ember.ArrayController.extend({
      * Load more videos on button click
      */
     loadMore: function() {
-
-      console.log('loading more', this.get('isPageLoading'));
 
       if(!this.get('isPageLoading')) {
 
@@ -359,7 +354,6 @@ App.IndexController = Ember.ArrayController.extend({
         });
 
       }
-      console.log('debounced');
       return;
 
     }
@@ -448,7 +442,6 @@ App.IndexView = Ember.View.extend({
       if(!Modernizr.mq(self.get('controller.largeMediaQuery'))) {
 
         if(data) {
-          console.log('destroy!');
           data.destroy();
         }
 
@@ -483,8 +476,8 @@ App.Video = Ember.Object.extend({
   id: null,
   title: null,
   published: null,
-  author: null, //author.name,.uri,/yt$userId
-  thumbnail: null, // media$group.media$thumbnail[3]
+  author: null,
+  thumbnail: null,
 });
 
 /**
@@ -556,12 +549,14 @@ App.ControlsView = Ember.View.extend({
 App.LoadMoreView = Ember.View.extend({
   tagName: 'li',
   classNames: ['load-more'],
-  didInsertElement: function() {
-    console.log('view made');
-  },
   click: function() {
     this.get('controller').send('loadMore');
   },
+  /**
+   * Add a touch event to the load more button
+   * to fix the click event not being fired on mobile
+   * devices
+   */
   touchEnd: function() {
     this.get('controller').send('loadMore');
   }
