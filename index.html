@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>OculusTube</title>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="styles/tooltipster.css">
+  <link rel="stylesheet" href="styles/jquery.jscrollpane.css">
+  <link rel="stylesheet" href="styles/typicons.min.css">
+  <link rel="stylesheet" href="styles/app.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="//builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.3.0.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/ember.js/1.6.1/ember.debug.js"></script>
+  <script src="dist/app.min.js"></script>
+  <script src="tests/runner.js"></script>
+  <script type="text/x-handlebars" id="index">
+
+    <div class="app">
+      <header>
+        <img src="images/logo.png" alt="OculusTube" class="logo">
+        <h1>Oculus<span class="highlight">Tube</span></h1>
+      </header>
+
+      <div class="app-wrapper">
+
+        {{input value=query classNames='search'}}
+
+        <div class="player-container">
+          <div class="video-wrapper">
+            <div id="player"></div>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          {{#view App.ControlsView}}
+            <li class="typcn typcn-media-rewind prev" {{action 'playPreviousVideo'}}></li>
+            <li class="typcn typcn-media-fast-forward next" {{action 'playNextVideo'}}></li>
+            <li class="typcn typcn-media-play play" {{action 'togglePlayer'}}></li>
+            <li class="position">
+              {{#if isEditing}}
+                {{edit-position focus-out="acceptChanges" value=editPosition}} / {{positionTotal}}
+              {{else}}
+                <span {{action "editPosition"}} class="editable">{{position}}</span> / {{positionTotal}}
+              {{/if}}
+            </li>
+          {{/view}}
+          <div class="more-videos">More videos</div>
+          <div class="video-list-container">
+            <ul class="video-list">
+            {{#each videos}}
+              {{!-- <li><button {{action 'doIt' id target="view"}}>Do it</button></li> --}}
+              {{#view App.VideoThumbnailView offset=_view.contentIndex}}
+                <div class="now-playing"></div>
+                <img {{bind-attr src=thumbnail}}>
+                <p>{{title}}</p>
+                <div class="fade-out"></div>
+              {{/view}}
+            {{/each}}
+            {{render 'loadMore'}}
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </script>
+  <script type="text/x-handlebars" id="loadMore">
+    Load more
+  </script>
+</head>
+<body>
+</body>
+</html>
