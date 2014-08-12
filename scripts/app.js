@@ -475,8 +475,6 @@ App.IndexView = Ember.View.extend({
 App.Video = Ember.Object.extend({
   id: null,
   title: null,
-  published: null,
-  author: null,
   thumbnail: null,
 });
 
