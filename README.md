@@ -14,7 +14,7 @@ Although this app was developed with responsivity in mind, the only features for
 
 Templating
 ------ 
-As Ember.js is coupled with Handlebars.js, it was used as the templating language. The templates are compiled on the fly on each page render, but this can be circumvented by precompiling them with [grunt-ember-templates](https://www.google.com)https://github.com/dgeb/grunt-ember-templates
+As Ember.js is coupled with Handlebars.js, it was used as the templating language. The templates are compiled on the fly on each page render, but this can be circumvented by precompiling them with [grunt-ember-templates](https://github.com/dgeb/grunt-ember-templates)
 
 Video Object Caching
 ------ 
